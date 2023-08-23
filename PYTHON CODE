@@ -1,0 +1,12 @@
+import boto3
+
+def lambda_handler(event,context):
+   volume_arn= event['resources'][0]
+   arn_parts= volume_arn.split(':')
+   volume_id= arn_parts[-1].split('/')[-1]
+   ec2_client= boto3.client('ec2')
+   response=ec2_client.modify_volume(
+       VolumeId= volume_id,
+	   VolumeType='gp3',
+   )
+ 
